@@ -1,6 +1,8 @@
 import os
 import pytest
 import allure
+import shutil
+from pathlib import Path
 from playwright.sync_api import Page, Browser, BrowserContext
 from pages.home_page import HomePage
 from pages.book_details_page import BookDetailsPage
@@ -52,3 +54,13 @@ def pytest_runtest_makereport(item, call):
                 name=f"Failure_Screenshot_{item.name}",
                 attachment_type=allure.attachment_type.PNG,
             )
+
+# Safely cleans the contents of allure-results
+def pytest_configure(config):
+    allure_dir = Path("allure-results")
+    if allure_dir.exists():
+        for item in allure_dir.iterdir():
+            if item.is_dir():
+                shutil.rmtree(item)
+            else:
+                item.unlink()
