@@ -1,5 +1,6 @@
 # Enterprise UI Automation Framework – Books to Scrape
 
+
 ## 1. Project Overview
 The **Enterprise UI Automation Framework** is a production-grade end-to-end testing solution built with **Playwright** and **Pytest**. It validates functional user journeys, data consistency across pages, broken hyperlinks, image rendering attributes, pagination, authentication workflows, and mobile responsiveness across [Books to Scrape](https://books.toscrape.com/index.html) and [Quotes to Scrape](https://quotes.toscrape.com/).
 
