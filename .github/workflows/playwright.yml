@@ -6,7 +6,13 @@ on:
   pull_request:
     branches: [ main, master, develop ]
   workflow_dispatch:
-
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 jobs:
   test:
     timeout-minutes: 30
