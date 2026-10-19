@@ -1,3 +1,5 @@
+"""Test Suite validating Books to Scrape functionality (TC1-TC5)."""
+
 import random
 import pytest
 import allure
@@ -15,6 +17,9 @@ class TestBooksToScrape:
     @pytest.mark.smoke
     @pytest.mark.regression
     def test_tc01_homepage_validation(self, home_page: HomePage) -> None:
+        """
+        TC1: Verify that the homepage loads successfully and displays expected content.
+        """
         home_page.open()
         home_page.verify_url(Config.BOOKS_BASE_URL)
         home_page.verify_title(Config.EXPECTED_BOOKS_TITLE)
@@ -36,6 +41,9 @@ class TestBooksToScrape:
     def test_tc02_random_book_navigation_validation(
         self, home_page: HomePage, details_page: BookDetailsPage
     ) -> None:
+        """
+        TC2: Randomly select 5 books and verify that each opens the correct details page.
+        """
         home_page.open()
         total_books = home_page.get_book_count()
         assert total_books >= Config.RANDOM_SAMPLE_SIZE, (
@@ -66,6 +74,9 @@ class TestBooksToScrape:
     def test_tc03_book_data_consistency_validation(
         self, home_page: HomePage, details_page: BookDetailsPage
     ) -> None:
+        """
+        TC3: Verify that book title and price on the homepage match the details page for 5 random books.
+        """
         home_page.open()
         total_books = home_page.get_book_count()
         selected_indices = random.sample(range(total_books), Config.RANDOM_SAMPLE_SIZE)
@@ -96,6 +107,9 @@ class TestBooksToScrape:
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.regression
     def test_tc04_broken_link_validation(self, home_page: HomePage) -> None:
+        """
+        TC4: Verify that all hyperlinks on the homepage return a 200 status code.
+        """
         home_page.open()
         unique_urls = home_page.get_unique_links()
         assert len(unique_urls) > 0, "No hyperlinks extracted from homepage."
@@ -115,6 +129,9 @@ class TestBooksToScrape:
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.regression
     def test_tc05_product_image_validation_across_pages(self, home_page: HomePage) -> None:
+        """
+        TC5: Verify that product images are displayed correctly across all pages.
+        """
         home_page.open()
         pages_visited = 0
         while pages_visited < Config.MAX_PAGINATION_PAGES:
@@ -136,9 +153,13 @@ class TestBooksToScrape:
     @pytest.mark.mobile
     @pytest.mark.regression
     def test_bonus_mobile_viewport_homepage_and_navigation(self, mobile_page: Page) -> None:
+        """
+        Bonus Test: Verify that the mobile viewport is correctly applied and that navigation works as expected.
+        """
+
         mobile_home = HomePage(mobile_page)
         mobile_details = BookDetailsPage(mobile_page)
-
+        
         mobile_home.open()
         assert mobile_page.viewport_size["width"] == 390, "Mobile viewport width not applied properly."
 

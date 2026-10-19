@@ -1,3 +1,4 @@
+"""Pytest configuration, fixtures, and reporting hooks."""
 import os
 import pytest
 import allure
@@ -12,6 +13,9 @@ os.environ.pop("NODE_OPTIONS", None)
 
 @pytest.fixture(scope="session")
 def browser_context_args(browser_context_args: dict) -> dict:
+    """
+    Globally configures Playwright browser context for all tests.
+    """
     return {
         **browser_context_args,
         "ignore_https_errors": True,
@@ -19,18 +23,24 @@ def browser_context_args(browser_context_args: dict) -> dict:
 
 @pytest.fixture
 def home_page(page: Page) -> HomePage:
+    """Provides an initialized HomePage object."""
     return HomePage(page)
 
 @pytest.fixture
 def details_page(page: Page) -> BookDetailsPage:
+    """Provides an initialized BookDetailsPage object."""
     return BookDetailsPage(page)
 
 @pytest.fixture
 def quotes_page(page: Page) -> QuotesPage:
+    """Provides an initialized QuotesPage object."""
     return QuotesPage(page)
 
 @pytest.fixture
 def mobile_page(playwright, browser: Browser) -> Page:
+    """
+    Creates a mobile-emulated page using iPhone 13 Pro device descriptor.
+    """
     iphone_13 = playwright.devices["iPhone 13 Pro"]
     context: BrowserContext = browser.new_context(
         **iphone_13,
@@ -42,6 +52,9 @@ def mobile_page(playwright, browser: Browser) -> Page:
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
+    """
+    Hook to capture screenshots on test failure and attach them to Allure reports.
+    """
     outcome = yield
     report = outcome.get_result()
 

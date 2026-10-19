@@ -1,3 +1,4 @@
+"""Test Suite validating Quotes to Scrape Login & Logout Link (TC6)."""
 import pytest
 import allure
 from pages.quotes_page import QuotesPage
@@ -12,6 +13,9 @@ class TestQuotesAuthentication:
     @pytest.mark.smoke
     @pytest.mark.regression
     def test_tc06_login_and_logout_link_validation(self, quotes_page: QuotesPage) -> None:
+        """
+        TC6: Verify that login functionality and the Logout link on Quotes to Scrape work properly.
+        """
         quotes_page.open_homepage()
         quotes_page.click_login_link()
         quotes_page.verify_login_page_loaded()
