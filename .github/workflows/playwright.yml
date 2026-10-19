@@ -1,0 +1,83 @@
+name: Playwright UI Automation CI/CD
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 2. Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: 3. Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 4. Install Playwright Chromium Binary
+        env:
+          NODE_OPTIONS: ""
+        run: playwright install chromium
+
+      - name: 5. Install Allure CLI in User Directory
+        run: |
+          mkdir -p "$HOME/allure"
+          curl -sSL https://github.com/allure-framework/allure2/releases/download/2.32.0/allure-2.32.0.tgz | tar -zx -C "$HOME/allure" --strip-components=1
+          echo "$HOME/allure/bin" >> $GITHUB_PATH
+
+      - name: 6. Execute Playwright Pytest Suite
+        env:
+          NODE_OPTIONS: ""
+        run: |
+          pytest --browser chromium \
+                 --html=reports/html/report.html \
+                 --self-contained-html \
+                 --alluredir=allure-results \
+                 --tracing=on \
+                 --video=on \
+                 --screenshot=on \
+                 --output=test-results
+
+      - name: 7. Generate Standalone Allure HTML Report
+        if: always()
+        run: |
+          allure generate allure-results --clean --single-file -o allure-report
+
+      - name: 8. Upload HTML Report Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-html-report
+          path: reports/html/
+          retention-days: 14
+
+      - name: 9. Upload Allure Results & Generated Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report-artifacts
+          path: |
+            allure-results/
+            allure-report/
+          retention-days: 14
+
+      - name: 10. Upload Execution Artifacts (Screenshots, Videos, Traces)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces-videos-screenshots
+          path: test-results/
+          retention-days: 14
