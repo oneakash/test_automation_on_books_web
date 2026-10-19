@@ -14,6 +14,7 @@ class BookDetailsPage(BasePage):
 
     @allure.step("Verify Book Details page loaded properly")
     def verify_details_page_loaded(self) -> None:
+        """Verifies core book information elements are visible on the details page."""
         expect(self.product_main).to_be_visible()
         expect(self.book_title_h1).to_be_visible()
         expect(self.book_price).to_be_visible()
@@ -22,8 +23,10 @@ class BookDetailsPage(BasePage):
 
     @allure.step("Get Book H1 Title from Details Page")
     def get_h1_title(self) -> str:
+        """Returns the text content of the H1 heading."""
         return self.book_title_h1.inner_text().strip()
 
     @allure.step("Get Book Price from Details Page")
     def get_price(self) -> str:
+        """Returns the price text from the details page."""
         return self.book_price.inner_text().strip()
