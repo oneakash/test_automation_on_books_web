@@ -1,0 +1,45 @@
+# Python Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Pytest Cache
+.pytest_cache/
+.cache/
+
+# Test Reports & Artifacts (Generated dynamically locally & in CI)
+reports/
+allure-results/
+allure-report/
+test-results/
+screenshots/
+videos/
+traces/
+
+# Distribution / Packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Environment Variables & Secrets
+.env
+.env.*
+
+# IDEs & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
