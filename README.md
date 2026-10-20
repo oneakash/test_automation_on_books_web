@@ -209,6 +209,10 @@ allure serve allure-results
 allure generate allure-results --clean --single-file -o allure-report
 ```
 
+### Test Reports
+
+You can view the latest Allure test report deployed in GitHub Pages here: https://oneakash.github.io/test_automation_on_books_web/.
+
 ---
 
 ## 12. GitHub Actions Setup
