@@ -1,5 +1,9 @@
 # Enterprise UI Automation Framework – Books to Scrape
 
+[![Playwright UI Automation CI/CD](https://github.com/oneakash/test_automation_on_books_web/actions/workflows/playwright.yml/badge.svg)](https://github.com/oneakash/test_automation_on_books_web/actions/workflows/playwright.yml)
+[![Allure Report](https://img.shields.io/badge/Allure%20Report-Live%20Dashboard-brightgreen)](https://oneakash.github.io/test_automation_on_books_web/)
+[![Python Version](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/)
+[![Playwright](https://img.shields.io/badge/playwright-1.49.0-orange.svg)](https://playwright.dev/)
 
 ## 1. Project Overview
 The **Enterprise UI Automation Framework** is a production-grade end-to-end testing solution built with **Playwright** and **Pytest**. It validates functional user journeys, data consistency across pages, broken hyperlinks, image rendering attributes, pagination, authentication workflows, and mobile responsiveness across [Books to Scrape](https://books.toscrape.com/index.html) and [Quotes to Scrape](https://quotes.toscrape.com/).
